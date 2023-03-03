@@ -1,0 +1,41 @@
+apiVersion: v1
+items:
+  - apiVersion: hpsys.ie.ibm.com/v1alpha1
+    kind: Workflow
+    metadata:
+      creationTimestamp: "2019-11-27T16:26:01Z"
+      finalizers:
+        - workflow.finalizer.hpsys.ie.ibm.com
+      generation: 2
+      name: example
+      namespace: default
+      resourceVersion: "16405"
+      selfLink: /apis/hpsys.ie.ibm.com/v1alpha1/namespaces/default/workflows/example
+      uid: e7dcedd2-d7c9-4a62-897c-35508d880ce9
+    spec:
+      command: elaunch.py
+      image: 9.162.221.169:5000/flow
+      imagePullSecrets:
+        - one
+        - two
+        - three
+      inputDataVolume:
+        name: ""
+      package:
+        branch: master
+        gitsecret: git-creds
+        url: git@github.ibm.com:hartreechem/Synthetic.package.git
+      workingVolume:
+        name: working-volume
+        persistentVolumeClaim:
+          claimName: dummy-pvc1
+    status:
+      cost: "0"
+      currentstage: stage2
+      exitstatus: Success
+      experimentstate: finished
+      stageprogress: "1.0"
+      stages: '[''stage0'', ''stage1'', ''stage2'']'
+      stagestate: finished
+      totalprogress: "1.0"
+      updated: "2019-11-27 16:32:44.075829"

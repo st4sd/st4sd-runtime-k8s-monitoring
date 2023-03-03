@@ -1,0 +1,380 @@
+typemeta:
+  kind: ""
+  apiversion: ""
+objectmeta:
+  name: example-flow-primary
+  generatename: ""
+  namespace: default
+  selflink: ""
+  uid: ""
+  resourceversion: ""
+  generation: 0
+  creationtimestamp: "0001-01-01T00:00:00Z"
+  deletiontimestamp: null
+  deletiongraceperiodseconds: null
+  labels:
+    workflow: example
+  annotations: {}
+  ownerreferences:
+    - apiversion: hpsys.ie.ibm.com/v1alpha1
+      kind: Workflow
+      name: example
+      uid: ab0be664-1621-4f76-bb33-8fda0fde2cd2
+      controller: true
+      blockownerdeletion: true
+  initializers: null
+  finalizers: []
+  clustername: ""
+  managedfields: []
+spec:
+  volumes:
+    - name: config-volume
+      volumesource:
+        hostpath: null
+        emptydir: null
+        gcepersistentdisk: null
+        awselasticblockstore: null
+        gitrepo: null
+        secret: null
+        nfs: null
+        iscsi: null
+        glusterfs: null
+        persistentvolumeclaim: null
+        rbd: null
+        flexvolume: null
+        cinder: null
+        cephfs: null
+        flocker: null
+        downwardapi: null
+        fc: null
+        azurefile: null
+        configmap:
+          localobjectreference:
+            name: example-config
+          items: []
+          defaultmode: null
+          optional: null
+        vspherevolume: null
+        quobyte: null
+        azuredisk: null
+        photonpersistentdisk: null
+        projected: null
+        portworxvolume: null
+        scaleio: null
+        storageos: null
+        csi: null
+    - name: working-volume
+      volumesource:
+        hostpath: null
+        emptydir: null
+        gcepersistentdisk: null
+        awselasticblockstore: null
+        gitrepo: null
+        secret: null
+        nfs: null
+        iscsi: null
+        glusterfs: null
+        persistentvolumeclaim:
+          claimname: dummy-pvc1
+          readonly: false
+        rbd: null
+        flexvolume: null
+        cinder: null
+        cephfs: null
+        flocker: null
+        downwardapi: null
+        fc: null
+        azurefile: null
+        configmap: null
+        vspherevolume: null
+        quobyte: null
+        azuredisk: null
+        photonpersistentdisk: null
+        projected: null
+        portworxvolume: null
+        scaleio: null
+        storageos: null
+        csi: null
+    - name: git-secrets-package
+      volumesource:
+        hostpath: null
+        emptydir: null
+        gcepersistentdisk: null
+        awselasticblockstore: null
+        gitrepo: null
+        secret:
+          secretname: git-creds
+          items: []
+          defaultmode: 288
+          optional: null
+        nfs: null
+        iscsi: null
+        glusterfs: null
+        persistentvolumeclaim: null
+        rbd: null
+        flexvolume: null
+        cinder: null
+        cephfs: null
+        flocker: null
+        downwardapi: null
+        fc: null
+        azurefile: null
+        configmap: null
+        vspherevolume: null
+        quobyte: null
+        azuredisk: null
+        photonpersistentdisk: null
+        projected: null
+        portworxvolume: null
+        scaleio: null
+        storageos: null
+        csi: null
+    - name: git-sync-package
+      volumesource:
+        hostpath: null
+        emptydir:
+          medium: ""
+          sizelimit: null
+        gcepersistentdisk: null
+        awselasticblockstore: null
+        gitrepo: null
+        secret: null
+        nfs: null
+        iscsi: null
+        glusterfs: null
+        persistentvolumeclaim: null
+        rbd: null
+        flexvolume: null
+        cinder: null
+        cephfs: null
+        flocker: null
+        downwardapi: null
+        fc: null
+        azurefile: null
+        configmap: null
+        vspherevolume: null
+        quobyte: null
+        azuredisk: null
+        photonpersistentdisk: null
+        projected: null
+        portworxvolume: null
+        scaleio: null
+        storageos: null
+        csi: null
+    - name: tmp-volume-name
+      volumesource:
+        hostpath: null
+        emptydir:
+          medium: ""
+          sizelimit: null
+        gcepersistentdisk: null
+        awselasticblockstore: null
+        gitrepo: null
+        secret: null
+        nfs: null
+        iscsi: null
+        glusterfs: null
+        persistentvolumeclaim: null
+        rbd: null
+        flexvolume: null
+        cinder: null
+        cephfs: null
+        flocker: null
+        downwardapi: null
+        fc: null
+        azurefile: null
+        configmap: null
+        vspherevolume: null
+        quobyte: null
+        azuredisk: null
+        photonpersistentdisk: null
+        projected: null
+        portworxvolume: null
+        scaleio: null
+        storageos: null
+        csi: null
+  initcontainers:
+    - name: git-sync-package
+      image: k8s.gcr.io/git-sync:v3.1.1
+      command: []
+      args:
+        - -repo=git@github.ibm.com:hartreechem/Synthetic.package.git
+        - -v=10
+        - -one-time
+        - -branch=master
+        - -depth=1
+        - -ssh
+      workingdir: ""
+      ports: []
+      envfrom: []
+      env: []
+      resources:
+        limits: {}
+        requests: {}
+      volumemounts:
+        - name: git-sync-package
+          readonly: false
+          mountpath: /tmp/git
+          subpath: ""
+          mountpropagation: null
+          subpathexpr: ""
+        - name: git-secrets-package
+          readonly: false
+          mountpath: /etc/git-secret
+          subpath: ""
+          mountpropagation: null
+          subpathexpr: ""
+      volumedevices: []
+      livenessprobe: null
+      readinessprobe: null
+      lifecycle: null
+      terminationmessagepath: ""
+      terminationmessagepolicy: ""
+      imagepullpolicy: ""
+      securitycontext:
+        capabilities: null
+        privileged: null
+        selinuxoptions: null
+        runasuser: 65533
+        runasgroup: 65533
+        runasnonroot: null
+        readonlyrootfilesystem: null
+        allowprivilegeescalation: null
+        procmount: null
+      stdin: false
+      stdinonce: false
+      tty: false
+  containers:
+    - name: elaunch-primary
+      image: 9.162.221.169:5000/flow
+      command:
+        - elaunch.py
+        - /mnt/package/Synthetic.package.git
+      args: []
+      workingdir: /tmp/workdir
+      ports: []
+      envfrom: []
+      env: []
+      resources:
+        limits: {}
+        requests: {}
+      volumemounts:
+        - name: config-volume
+          readonly: false
+          mountpath: /etc/podinfo/flow-k8s-conf.yml
+          subpath: flow-k8s-conf.yml
+          mountpropagation: null
+          subpathexpr: ""
+        - name: working-volume
+          readonly: false
+          mountpath: /tmp/workdir
+          subpath: ""
+          mountpropagation: null
+          subpathexpr: ""
+        - name: git-sync-package
+          readonly: false
+          mountpath: /mnt/package
+          subpath: ""
+          mountpropagation: null
+          subpathexpr: ""
+        - name: tmp-volume-name
+          readonly: false
+          mountpath: /tmp
+          subpath: ""
+          mountpropagation: null
+          subpathexpr: ""
+      volumedevices: []
+      livenessprobe: null
+      readinessprobe: null
+      lifecycle: null
+      terminationmessagepath: ""
+      terminationmessagepolicy: ""
+      imagepullpolicy: Always
+      securitycontext: null
+      stdin: false
+      stdinonce: false
+      tty: false
+    - name: monitor-elaunch-container
+      image: workflow-monitoring
+      command: []
+      args: []
+      workingdir: ""
+      ports: []
+      envfrom: []
+      env: []
+      resources:
+        limits: {}
+        requests: {}
+      volumemounts:
+        - name: tmp-volume-name
+          readonly: false
+          mountpath: /tmp
+          subpath: ""
+          mountpropagation: null
+          subpathexpr: ""
+        - name: config-volume
+          readonly: false
+          mountpath: /etc/podinfo/flow-k8s-conf.yml
+          subpath: flow-k8s-conf.yml
+          mountpropagation: null
+          subpathexpr: ""
+      volumedevices: []
+      livenessprobe: null
+      readinessprobe: null
+      lifecycle: null
+      terminationmessagepath: ""
+      terminationmessagepolicy: ""
+      imagepullpolicy: IfNotPresent
+      securitycontext: null
+      stdin: false
+      stdinonce: false
+      tty: false
+  restartpolicy: Never
+  terminationgraceperiodseconds: null
+  activedeadlineseconds: null
+  dnspolicy: ""
+  nodeselector: {}
+  serviceaccountname: workflow-operator
+  deprecatedserviceaccount: ""
+  automountserviceaccounttoken: null
+  nodename: ""
+  hostnetwork: false
+  hostpid: false
+  hostipc: false
+  shareprocessnamespace: null
+  securitycontext:
+    selinuxoptions: null
+    runasuser: null
+    runasgroup: null
+    runasnonroot: null
+    supplementalgroups: []
+    fsgroup: 65533
+    sysctls: []
+  imagepullsecrets:
+    - name: one
+    - name: two
+    - name: three
+  hostname: ""
+  subdomain: ""
+  affinity: null
+  schedulername: ""
+  tolerations: []
+  hostaliases: []
+  priorityclassname: ""
+  priority: null
+  dnsconfig: null
+  readinessgates: []
+  runtimeclassname: null
+  enableservicelinks: null
+status:
+  phase: ""
+  conditions: []
+  message: ""
+  reason: ""
+  nominatednodename: ""
+  hostip: ""
+  podip: ""
+  starttime: null
+  initcontainerstatuses: []
+  containerstatuses: []
+  qosclass: ""
